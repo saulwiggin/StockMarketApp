@@ -8,7 +8,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Divider
 import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.room.util.TableInfo
@@ -18,14 +20,12 @@ import com.plcoding.stockmarketapp.presentation.company_info.company_listings.Co
 import com.plcoding.stockmarketapp.presentation.company_info.company_listings.CompanyListingsViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import org.w3c.dom.Text
 import java.lang.reflect.Modifier
 
 @Composable
 @Destination(start = true)
 fun CompanyListingsScreen(
     modifier: androidx.compose.ui.Modifier = androidx.compose.ui.Modifier,
-    navigator: DestinationsNavigator,
     viewModel: CompanyListingsViewModel = hiltViewModel()
 ) {
     val swipeRefreshState = rememberSwipeRefreshState(
@@ -38,19 +38,8 @@ fun CompanyListingsScreen(
         OutlinedTextField(
             value = state.searchQuery,
             onValueChange = {
-                viewModel.onEvent(
-                    CompanyListingEvent.OnSearchQueryChange(it)
-                )
-            },
-            modifier = modifier
-                .padding(16.dp)
-                .fillMaxWidth(),
-                placeholder = {
-                    Text(text = "Search...")
-                },
-                maxlines = 1,
-                singleLine = true
-        )
+                viewModel.onEvent(CompanyListingEvent.OnSearchQueryChange(it))
+            })
             SwipeRefresh(
                 state = swipeRefreshState,
                 onRefresh = {
@@ -79,4 +68,6 @@ fun CompanyListingsScreen(
                 }
             }
     }
+}
+
 }
