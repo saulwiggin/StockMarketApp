@@ -4,10 +4,10 @@ import okhttp3.ResponseBody
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-abstract class stockApi {
+interface stockApi {
 
     @GET("query?function=LISTING_STATUS")
-    abstract suspend fun getListings(
+    suspend fun getListings(
         @Query("apikey") apiKey: String = API_KEY
     ): ResponseBody
 
